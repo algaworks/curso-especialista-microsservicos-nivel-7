@@ -1,0 +1,59 @@
+spring:
+  config:
+    import:
+      - aws-secretsmanager:/secret/algashop/product-catalog/redis-password?prefix=catalog.secrets.
+      - aws-parameterstore:/config/algashop/product-catalog?prefix=catalog.params
+      - aws-parameterstore:/config/algashop/shared?prefix=shared.params
+  cloud:
+    aws:
+      credentials:
+        access-key: test
+        secret-key: test
+      region:
+        static: us-east-1
+      endpoint: http://algashop-localstack:4566
+      s3:
+        enabled: true
+        path-style-access-enabled: true
+  cache:
+    type: redis
+  mongodb:
+    uri: ${catalog.params.mongodb.uri}
+  data:
+    redis:
+      host: ${catalog.params.redis.host}
+      port: ${catalog.params.redis.port}
+      password: ${catalog.secrets.redis-password}
+      database: ${catalog.params.redis.database}
+      timeout: ${catalog.params.redis.timeout}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${shared.params.auth-server-url}
+
+logging:
+  level:
+    com.netflix.discovery.DiscoveryClient: OFF
+    com.netflix.discovery: OFF
+    com.netflix.eureka: OFF
+
+algashop:
+  data-load:
+    enabled: true
+    auto-delete: true
+  mapping:
+    image-storage-url: ${catalog.params.storage.image-storage-url}
+  storage:
+    s3:
+      bucket-name: ${catalog.params.storage.bucket-name}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${shared.params.service-registry-url}/eureka
+    healthcheck:
+      enabled: true
+  instance:
+    instanceId: ${random.uuid}
+    prefer-ip-address: true
