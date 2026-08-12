@@ -1,0 +1,80 @@
+asyncapi: 3.1.0
+
+info:
+  title: AlgaShop - Product Catalog AsyncAPI
+  version: "1.0"
+
+servers:
+  development:
+    host: "algashop-kafka-1:9092"
+    protocol: kafka
+    description: Development
+
+channels:
+  productEvents:
+    address: product-catalog.product.events
+    title: Product Events
+    messages:
+      productAdded:
+        $ref: "#/components/messages/ProductAddedEvent"
+    bindings:
+      kafka:
+        topic: product-catalog.product.events
+        partitions: 3
+        replicas: 3
+        topicConfiguration:
+          min.insync.replicas: 2
+        bindingVersion: "0.5.0"
+
+components:
+  messages:
+    ProductAddedEvent:
+      name: ProductAddedEvent
+      title: Product Added Event
+      summary: Published when a new product is added.
+      contentType: application/json
+      tags:
+        - name: Products
+      payload:
+        type: object
+        required:
+          - productId
+          - addedAt
+        properties:
+          productId:
+            $ref: "#/components/schemas/ProductId"
+          addedAt:
+            type: string
+            format: date-time
+            description: Date and time when a product was added.
+            example: "2024-04-04T00:12:45Z"
+      headers:
+        type: object
+        required:
+          - __TypeId__
+        properties:
+          __TypeId__:
+            type: string
+            const: "ProductCatalog.ProductAddedIntegrationEvent"
+            description: Type of the event for deserialization
+      traits:
+        - $ref: "#/components/messageTraits/KafkaProductKey"
+
+  schemas:
+    ProductId:
+      type: string
+      description: ID of product
+      example: "fcc2897f-70a8-4c87-a4d0-26a4e0bb36dc"
+
+  messageTraits:
+    KafkaProductKey:
+      bindings:
+        kafka:
+          key:
+            type: string
+            description: Product id 
+            example: "fcc2897f-70a8-4c87-a4d0-26a4e0bb36dc"
+          bindingVersion: "0.5.0"
+
+
+
