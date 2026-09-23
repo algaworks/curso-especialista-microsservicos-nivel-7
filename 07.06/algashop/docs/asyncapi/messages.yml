@@ -173,7 +173,7 @@ components:
       payload:
         $ref: "#/components/schemas/InvoicePaidPayload"
       traits:
-        - $ref: "#/components/messageTraits/KafkaOrderKey"
+        - $ref: "#/components/messageTraits/KafkaInvoiceKey"
 
     InvoiceIssuedEvent:
       name: InvoiceIssuedEvent
@@ -187,7 +187,7 @@ components:
       payload:
         $ref: "#/components/schemas/InvoiceIssuedPayload"
       traits:
-        - $ref: "#/components/messageTraits/KafkaOrderKey"
+        - $ref: "#/components/messageTraits/KafkaInvoiceKey"
 
     InvoiceCanceledEvent:
       name: InvoiceCanceledEvent
@@ -201,7 +201,7 @@ components:
       payload:
         $ref: "#/components/schemas/InvoiceCanceledPayload"
       traits:
-        - $ref: "#/components/messageTraits/KafkaOrderKey"
+        - $ref: "#/components/messageTraits/KafkaInvoiceKey"
 
     ProcessAcceptedCheckoutCommand:
       name: ProcessAcceptedCheckoutCommand
@@ -960,4 +960,11 @@ components:
         kafka:
           key:
             $ref: "#/components/schemas/OrderId"
+          bindingVersion: "0.5.0"
+
+    KafkaInvoiceKey:
+      bindings:
+        kafka:
+          key:
+            $ref: "#/components/schemas/InvoiceId"
           bindingVersion: "0.5.0"
