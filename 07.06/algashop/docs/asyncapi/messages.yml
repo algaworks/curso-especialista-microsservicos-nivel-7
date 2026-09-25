@@ -103,7 +103,7 @@ components:
       payload:
         $ref: "#/components/schemas/StockReservationConfirmedPayload"
       traits:
-        - $ref: "#/components/messageTraits/KafkaOrderKey"
+        - $ref: "#/components/messageTraits/KafkaStockReservationKey"
 
     StockReservationRejectedEvent:
       name: StockReservationRejectedEvent
@@ -117,7 +117,7 @@ components:
       payload:
         $ref: "#/components/schemas/StockReservationRejectedPayload"
       traits:
-        - $ref: "#/components/messageTraits/KafkaOrderKey"
+        - $ref: "#/components/messageTraits/KafkaStockReservationKey"
 
     OrderPlacedEvent:
       name: OrderPlacedEvent
@@ -967,4 +967,11 @@ components:
         kafka:
           key:
             $ref: "#/components/schemas/InvoiceId"
+          bindingVersion: "0.5.0"
+
+    KafkaStockReservationKey:
+      bindings:
+        kafka:
+          key:
+            $ref: "#/components/schemas/StockReservationId"
           bindingVersion: "0.5.0"
