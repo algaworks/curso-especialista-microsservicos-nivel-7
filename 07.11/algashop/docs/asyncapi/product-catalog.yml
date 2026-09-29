@@ -27,6 +27,12 @@ channels:
         $ref: "./messages.yml#/components/messages/ProductPriceChangedEvent"
       productPriceChangedV2:
         $ref: "./messages.yml#/components/messages/ProductPriceChangedEventV2"
+      productPlacedOnSale:
+        $ref: "./messages.yml#/components/messages/ProductPlacedOnSaleEvent"
+      productRestocked:
+        $ref: "./messages.yml#/components/messages/ProductRestockedEvent"
+      productSoldOut:
+        $ref: "./messages.yml#/components/messages/ProductSoldOutEvent"
     bindings:
       kafka:
         topic: product-catalog.product.events
@@ -104,6 +110,9 @@ operations:
       - $ref: "#/channels/productEvents/messages/productDelisted"
       - $ref: "#/channels/productEvents/messages/productPriceChanged"
       - $ref: "#/channels/productEvents/messages/productPriceChangedV2"
+      - $ref: "#/channels/productEvents/messages/productPlacedOnSale"
+      - $ref: "#/channels/productEvents/messages/productRestocked"
+      - $ref: "#/channels/productEvents/messages/productSoldOut"
 
   consumeOrderPaidEvents:
     action: receive

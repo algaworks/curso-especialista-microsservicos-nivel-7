@@ -28,6 +28,10 @@ channels:
         $ref: "./messages.yml#/components/messages/ProductListedEvent"
       productDelisted:
         $ref: "./messages.yml#/components/messages/ProductDelistedEvent"
+      productRestocked:
+        $ref: "./messages.yml#/components/messages/ProductRestockedEvent"
+      productSoldOut:
+        $ref: "./messages.yml#/components/messages/ProductSoldOutEvent"
       productPriceChangedV2:
         $ref: "./messages.yml#/components/messages/ProductPriceChangedEventV2"
     bindings:
@@ -119,6 +123,10 @@ channels:
         $ref: "./messages.yml#/components/messages/ProductListedEvent"
       productDelisted:
         $ref: "./messages.yml#/components/messages/ProductDelistedEvent"
+      productRestocked:
+        $ref: "./messages.yml#/components/messages/ProductRestockedEvent"
+      productSoldOut:
+        $ref: "./messages.yml#/components/messages/ProductSoldOutEvent"
       productPriceChangedV2:
         $ref: "./messages.yml#/components/messages/ProductPriceChangedEventV2"
     bindings:
@@ -192,6 +200,8 @@ operations:
     messages:
       - $ref: "#/channels/productEvents/messages/productListed"
       - $ref: "#/channels/productEvents/messages/productDelisted"
+      - $ref: "#/channels/productEvents/messages/productRestocked"
+      - $ref: "#/channels/productEvents/messages/productSoldOut"
       - $ref: "#/channels/productEvents/messages/productPriceChangedV2"
     bindings:
       kafka:

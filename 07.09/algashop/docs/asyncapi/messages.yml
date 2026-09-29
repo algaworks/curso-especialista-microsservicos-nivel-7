@@ -77,6 +77,48 @@ components:
       traits:
         - $ref: "#/components/messageTraits/KafkaProductKey"
 
+    ProductPlacedOnSaleEvent:
+      name: ProductPlacedOnSaleEvent
+      title: Product Placed On Sale Event
+      summary: Published when a product is placed on sale.
+      contentType: application/json
+      tags:
+        - name: Products
+      headers:
+        $ref: "#/components/schemas/ProductPlacedOnSaleHeaders"
+      payload:
+        $ref: "#/components/schemas/ProductPlacedOnSalePayload"
+      traits:
+        - $ref: "#/components/messageTraits/KafkaProductKey"
+
+    ProductRestockedEvent:
+      name: ProductRestockedEvent
+      title: Product Restocked Event
+      summary: Published when a product is back in stock.
+      contentType: application/json
+      tags:
+        - name: Products
+      headers:
+        $ref: "#/components/schemas/ProductRestockedHeaders"
+      payload:
+        $ref: "#/components/schemas/ProductRestockedPayload"
+      traits:
+        - $ref: "#/components/messageTraits/KafkaProductKey"
+
+    ProductSoldOutEvent:
+      name: ProductSoldOutEvent
+      title: Product Sold Out Event
+      summary: Published when a product runs out of stock.
+      contentType: application/json
+      tags:
+        - name: Products
+      headers:
+        $ref: "#/components/schemas/ProductSoldOutHeaders"
+      payload:
+        $ref: "#/components/schemas/ProductSoldOutPayload"
+      traits:
+        - $ref: "#/components/messageTraits/KafkaProductKey"
+
     OrderPaidEvent:
       name: OrderPaidEvent
       title: Order Paid Event
@@ -276,6 +318,42 @@ components:
             __TypeId__:
               type: string
               const: ProductCatalog.ProductPriceChangedV2IntegrationEvent
+              description: Logical type used by the Jackson deserializer.
+
+    ProductPlacedOnSaleHeaders:
+      allOf:
+        - $ref: "#/components/schemas/IdempotentEventHeaders"
+        - type: object
+          required:
+            - __TypeId__
+          properties:
+            __TypeId__:
+              type: string
+              const: ProductCatalog.ProductPlacedOnSaleIntegrationEvent
+              description: Logical type used by the Jackson deserializer.
+
+    ProductRestockedHeaders:
+      allOf:
+        - $ref: "#/components/schemas/IdempotentEventHeaders"
+        - type: object
+          required:
+            - __TypeId__
+          properties:
+            __TypeId__:
+              type: string
+              const: ProductCatalog.ProductRestockedIntegrationEvent
+              description: Logical type used by the Jackson deserializer.
+
+    ProductSoldOutHeaders:
+      allOf:
+        - $ref: "#/components/schemas/IdempotentEventHeaders"
+        - type: object
+          required:
+            - __TypeId__
+          properties:
+            __TypeId__:
+              type: string
+              const: ProductCatalog.ProductSoldOutIntegrationEvent
               description: Logical type used by the Jackson deserializer.
 
     OrderPaidHeaders:
@@ -487,6 +565,54 @@ components:
           $ref: "#/components/schemas/Money"
         newSalePrice:
           $ref: "#/components/schemas/Money"
+
+    ProductPlacedOnSalePayload:
+      type: object
+      required:
+        - productId
+        - regularPrice
+        - salePrice
+        - placedOnSaleAt
+      properties:
+        productId:
+          $ref: "#/components/schemas/ProductId"
+        regularPrice:
+          $ref: "#/components/schemas/Money"
+        salePrice:
+          $ref: "#/components/schemas/Money"
+        placedOnSaleAt:
+          type: string
+          format: date-time
+          description: Date and time when the product was placed on sale.
+          example: "2026-09-11T10:15:30-03:00"
+
+    ProductRestockedPayload:
+      type: object
+      required:
+        - productId
+        - restockedAt
+      properties:
+        productId:
+          $ref: "#/components/schemas/ProductId"
+        restockedAt:
+          type: string
+          format: date-time
+          description: Date and time when the product was restocked.
+          example: "2026-09-11T10:15:30-03:00"
+
+    ProductSoldOutPayload:
+      type: object
+      required:
+        - productId
+        - soldOutAt
+      properties:
+        productId:
+          $ref: "#/components/schemas/ProductId"
+        soldOutAt:
+          type: string
+          format: date-time
+          description: Date and time when the product was sold out.
+          example: "2026-09-11T10:15:30-03:00"
 
     OrderPaidPayload:
       type: object
