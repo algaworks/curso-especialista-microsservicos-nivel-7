@@ -1,7 +1,0 @@
-spring:
-  profiles:
-    active: test
-    group:
-      test:
-        - base
-        - test-env

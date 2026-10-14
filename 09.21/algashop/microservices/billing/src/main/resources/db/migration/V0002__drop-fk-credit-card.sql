@@ -1,1 +1,0 @@
-ALTER TABLE payment_settings DROP CONSTRAINT fk_payment_settings_credit_card_id;

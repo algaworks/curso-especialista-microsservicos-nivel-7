@@ -1,1 +1,0 @@
-alter table public.outbox rename column event_type to message_type;

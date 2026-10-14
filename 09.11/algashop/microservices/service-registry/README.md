@@ -1,1 +1,0 @@
-# ems-algashop-service-registry

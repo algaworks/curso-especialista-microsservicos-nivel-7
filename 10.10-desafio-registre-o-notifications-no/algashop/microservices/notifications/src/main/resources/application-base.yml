@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: notifications
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    placeholder-replacement: false
