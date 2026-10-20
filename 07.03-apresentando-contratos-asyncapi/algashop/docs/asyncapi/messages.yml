@@ -643,14 +643,14 @@ components:
     OrderItemSnapshot:
       type: object
       required:
-        - id
+        - orderItemId
         - productId
         - productName
         - price
         - quantity
         - totalAmount
       properties:
-        id:
+        orderItemId:
           type: string
           minLength: 1
           description: ID of the order item.
